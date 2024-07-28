@@ -8,6 +8,6 @@ export default function createReportObject(employeesList) {
 
   return {
     allEmployees: employees,
-    getNumberOfDepartments: getNumberOfDepartments
+    getNumberOfDepartments,
   };
 }
