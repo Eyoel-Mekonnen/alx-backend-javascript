@@ -6,8 +6,22 @@ export default function (firstName, lastName, fileName) {
   const promise2 = uploadPhoto(fileName);
   return Promise.allSettled([promise1, promise2])
     .then((values) => {
-      const result1 = values[0];
-      const result2 = values[1];
-      return [result1.firstName, result1.lastName, result2];
+      const array = [];
+      for (let i = 0; i < values.length; i += 1) {
+        const transformedObject = {
+          status: values[i].status,
+          value: (() => {
+            let value;
+            if (values[i].status === 'fulfilled') {
+              value = values[i].value;
+            } else {
+              value = String(values[i].reason);
+            }
+            return value;
+          })(),
+        };
+        array.push(transformedObject);
+      }
+      return array;
     });
 }
