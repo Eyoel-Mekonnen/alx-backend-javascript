@@ -1,11 +1,11 @@
 export default function guardrail(mathFunction) {
-  const array =[];
+  const array = [];
 
   try {
     array.push(mathFunction());
   } catch (error) {
     const err = error.message;
-    const message = 'Error: ' + err;
+    const message = `Error: ${err}`;
     array.push(message);
   }
   array.push('Guardrail was processed');
