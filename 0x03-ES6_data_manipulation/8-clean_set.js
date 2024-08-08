@@ -4,15 +4,17 @@ export default function cleanSet(set, startString) {
     return '';
   }
   for (const value of set) {
-    const output = value.startsWith(startString);
-    if (output === true) {
-      const slice = value.slice(startString.length);
-      if (concat) {
-        concat += `-${slice}`;
+    if (typeof value === 'string' && value.startsWith(startString)) {
+        const sliced = value.slice(startString.length);
+        console.log(sliced);
+	if (concat) {
+          concat += `-${sliced}`;
+        } else {
+          concat = sliced;
+        }
       } else {
-        concat = slice;
+        continue;
       }
     }
-  }
-  return concat;
+    return concat;
 }
