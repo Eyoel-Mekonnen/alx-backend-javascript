@@ -5,4 +5,4 @@ test("returns the string test-chicken-user-id when id- is passed in", () => {
   expect(cleanSet(set, 'id-')).toBe('test-chicken-user-id-');
 });
 */
-console.log(cleanSet(new Set(['id-test', 'id-chicken', 'id-user', ,'id-id-']), 'id-'));
+console.log(cleanSet(new Set(['id-test', 'id-chicken', 'id-user', ,'id-id-'])));

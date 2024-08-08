@@ -1,6 +1,6 @@
 export default function cleanSet(set, startString) {
   let concat = '';
-  if (startString.length === 0) {
+  if (!set || !startString || startString.length === 0) {
     return '';
   }
   for (const value of set) {
