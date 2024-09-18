@@ -48,7 +48,7 @@ app.on('request', (req, res) => {
       .then(({ studentMajor, numberOfStudents }) => {
         res.write(`Number of students: ${numberOfStudents}\n`);
         Object.entries(studentMajor).forEach(([major, { name, count }]) => {
-          res.write(`Number of students in ${major}: ${count}. List: ${name.join(', ')}\n`);
+          res.write(`Number of students in ${major}: ${count}. List: ${name.join(', ')}`);
         });
         res.end();
       })
