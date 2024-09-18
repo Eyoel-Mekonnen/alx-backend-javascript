@@ -44,10 +44,10 @@ app.on('request', (req, res) => {
     res.write('Hello Holberton School!');
     res.end();
   } else if (req.url === '/students') {
-    res.write('This is the list of our students\n');
+    res.write('This is the list of our students');
     countStudents(dbFile)
       .then(({ studentMajor, numberOfStudents }) => {
-        res.write(`Number of students: ${numberOfStudents}\n`);
+        res.write(`Number of students: ${numberOfStudents}`);
         Object.entries(studentMajor).forEach(([major, { name, count }]) => {
           res.write(`Number of students in ${major}: ${count}. List: ${name.join(', ')}`);
         });
