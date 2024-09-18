@@ -1,0 +1,16 @@
+const countStudents = (file) => {
+  const fs = require('fs'); // eslint-disable-line global-require
+  try {
+    const data = fs.readFileSync(file, 'utf8');
+    data = data.trim()
+    const stringForm = data.split('\n')
+    let linenumber = 0;
+    stringForm.forEach((line) => {
+      console.log(`Line ${linenumber} ${line}`)
+      linenumber = linenumber + 1;
+    })
+  } catch (err) {
+    console.error(err);
+  }
+}
+module.exports = countStudents;
