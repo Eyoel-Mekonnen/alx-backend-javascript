@@ -3,7 +3,7 @@ const http = require('http');
 const app = http.createServer();
 const port = 1245;
 const host = 'localhost';
-const dbFile = process.argv[2];
+const dbFile = process.argv.length > 2 ? process.argv[2] : '';
 const fs = require('fs');
 
 const countStudents = (file) => new Promise((resolve, reject) => {
@@ -41,25 +41,33 @@ app.on('request', (req, res) => {
   res.setHeader('Content-Type', 'text/plain');
   if (req.url === '/') {
     res.statusCode = 200;
-    res.write('Hello Holberton School!');
-    res.end();
+    const responseText = 'Hello Holberton School!';
+    res.setHeader('Content-Length', Buffer.byteLength(responseText));
+    res.end(responseText);
   } else if (req.url === '/students') {
-    res.write('This is the list of our students\n');
+    const responseParts = ['This is the list of our students'];
     countStudents(dbFile)
       .then(({ studentMajor, numberOfStudents }) => {
-        res.write(`Number of students: ${numberOfStudents}\n`);
+        responseParts.push(`Number of students: ${numberOfStudents}`);
         Object.entries(studentMajor).forEach(([major, { name, count }]) => {
-          res.write(`Number of students in ${major}: ${count}. List: ${name.join(', ')}\n`);
+          responseParts.push(`Number of students in ${major}: ${count}. List: ${name.join(', ')}`);
         });
-        res.end();
+	const responseText = responseParts.join('\n');
+	res.setHeader('Content-Length', Buffer.byteLength(responseText));
+        res.end(responseText);
       })
       .catch((error) => {
-        res.statusCode = 500;
-        res.end(`Error: ${error.message}`);
+        responseParts.push(`Error: ${error.message}`);
+	const responseText = responseParts.join('\n'); 
+	res.setHeader('Content-Length', Buffer.byteLength(responseText));
+	res.statusCode = 500;
+        res.end(responseText);
       });
   } else {
     res.statusCode = 404;
-    res.end('Not Found');
+    const notFoundText = 'Not Found';
+    res.setHeader('Content-Length', Buffer.byteLength(notFoundText));
+    res.end(notFoundText);
   }
 });
 
