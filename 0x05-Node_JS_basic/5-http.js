@@ -52,15 +52,15 @@ app.on('request', (req, res) => {
         Object.entries(studentMajor).forEach(([major, { name, count }]) => {
           responseParts.push(`Number of students in ${major}: ${count}. List: ${name.join(', ')}`);
         });
-	const responseText = responseParts.join('\n');
-	res.setHeader('Content-Length', Buffer.byteLength(responseText));
+        const responseText = responseParts.join('\n');
+        res.setHeader('Content-Length', Buffer.byteLength(responseText));
         res.end(responseText);
       })
       .catch((error) => {
         responseParts.push(`Error: ${error.message}`);
-	const responseText = responseParts.join('\n'); 
-	res.setHeader('Content-Length', Buffer.byteLength(responseText));
-	res.statusCode = 500;
+        const responseText = responseParts.join('\n');
+        res.setHeader('Content-Length', Buffer.byteLength(responseText));
+        res.statusCode = 500;
         res.end(responseText);
       });
   } else {
