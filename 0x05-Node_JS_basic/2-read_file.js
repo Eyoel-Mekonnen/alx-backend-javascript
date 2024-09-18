@@ -1,9 +1,19 @@
 const countStudents = (file) => {
   const fs = require('fs'); // eslint-disable-line global-require
+  if (!fs.existsSync(file)) {
+    throw new Error('Cannot load the database')
+  }
+  if (!fs.statSync(file)) {
+    throw new Error('Cannot load the database');
+  }
   try {
     const data = fs.readFileSync(file, 'utf8');
     const trimmedData = data.trim();
     const arrayData = trimmedData.split('\n');
+    if (arrayData.length <= 1) {
+      console.log('No data in the file');
+      return;
+    }
     arrayData.shift();
     let numberOfStudents = 0;
     const studentMajor = {};
@@ -19,8 +29,13 @@ const countStudents = (file) => {
       numberOfStudents += 1;
     });
     console.log(`Number of students: ${numberOfStudents}`);
+    Object.entries(studentMajor).forEach(([major, {name, count}]) => {
+      console.log(`Number of students in ${major}: ${count}. List: ${name.join(', ')}`);
+    });
+    /*
     console.log(`Number of students in CS: ${studentMajor.CS.count}. List: ${studentMajor.CS.name}`);
     console.log(`Number of students in SWE: ${studentMajor.SWE.count}. List: ${studentMajor.SWE.name}`);
+    */
   } catch (err) {
     console.error(err);
   }
