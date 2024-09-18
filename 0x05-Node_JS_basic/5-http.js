@@ -38,12 +38,13 @@ const countStudents = (file) => new Promise((resolve, reject) => {
 });
 
 app.on('request', (req, res) => {
-  res.statusCode = 200;
   res.setHeader('Content-Type', 'text/plain');
   if (req.url === '/') {
+    res.statusCode = 200;
     res.write('Hello Holberton School!');
     res.end();
   } else if (req.url === '/students') {
+    res.write('This is the list of our students\n');
     countStudents(dbFile)
       .then(({ studentMajor, numberOfStudents }) => {
         res.write(`Number of students: ${numberOfStudents}\n`);
