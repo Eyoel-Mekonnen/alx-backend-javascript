@@ -45,6 +45,7 @@ app.on('request', (req, res) => {
     res.setHeader('Content-Length', Buffer.byteLength(responseText));
     res.end(responseText);
   } else if (req.url === '/students') {
+    res.statusCode = 200;
     const responseParts = ['This is the list of our students'];
     countStudents(dbFile)
       .then(({ studentMajor, numberOfStudents }) => {
@@ -60,11 +61,11 @@ app.on('request', (req, res) => {
         responseParts.push(`Error: ${error.message}`);
         const responseText = responseParts.join('\n');
         res.setHeader('Content-Length', Buffer.byteLength(responseText));
-        res.statusCode = 500;
+        res.statusCode = 200;
         res.end(responseText);
       });
   } else {
-    res.statusCode = 404;
+    res.statusCode = 200;
     const notFoundText = 'Not Found';
     res.setHeader('Content-Length', Buffer.byteLength(notFoundText));
     res.end(notFoundText);
