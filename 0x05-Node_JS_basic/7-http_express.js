@@ -1,6 +1,7 @@
 const express = require('express');
 
 const fs = require('fs');
+
 const app = express();
 const port = 1245;
 const host = 'localhost';
@@ -57,6 +58,6 @@ app.get('/students', (_, res) => {
     });
 });
 app.listen(port, host, () => {
-  console.log(`Server Listening on ${port}: ${host}`)
+  console.log(`Server Listening on ${port}: ${host}`);
 });
-module.exports = app
+module.exports = app;
