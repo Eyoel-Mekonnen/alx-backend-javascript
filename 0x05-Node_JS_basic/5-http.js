@@ -52,16 +52,16 @@ app.on('request', (req, res) => {
           responseParts.push(`Number of students in ${major}: ${count}. List: ${name.join(', ')}`);
         });
         const responseText = responseParts.join('\n');
-	res.setHeader('Content-Type', 'text/plain');
+        res.setHeader('Content-Type', 'text/plain');
         res.setHeader('Content-Length', Buffer.byteLength(responseText));
-	res.statusCode = 200;
+        res.statusCode = 200;
         res.end(responseText);
       })
       .catch((error) => {
         const responseText = `This is the list of our students\n${error.message}`;
-	res.setHeader('Content-Type', 'text/plain');
+        res.setHeader('Content-Type', 'text/plain');
         res.setHeader('Content-Length', Buffer.byteLength(responseText));
-	res.statusCode = 200;
+        res.statusCode = 200;
         res.end(responseText);
       });
   }
