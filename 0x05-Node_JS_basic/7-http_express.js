@@ -6,7 +6,7 @@ const port = 1245;
 const host = 'localhost';
 const dbFile = process.argv.length > 2 ? process.argv[2] : '';
 const countStudents = (dbFile) => new Promise((resolve, reject) => {
-  fsreadFile(dbFile, 'utf8', (err, data) => {
+  fs.readFile(dbFile, 'utf8', (err, data) => {
     if (err) {
       reject(new Error('Cannot load the database'));
       return;
@@ -15,7 +15,7 @@ const countStudents = (dbFile) => new Promise((resolve, reject) => {
     const arrayFormat = stringFormat.split('\n');
     arrayFormat.shift();
     const studentMajor = {};
-    const numberOfStudents = 0;
+    let numberOfStudents = 0;
     arrayFormat.forEach((line) => {
       const fields = line.split(',');
       const firstName = fields[0];
@@ -27,7 +27,7 @@ const countStudents = (dbFile) => new Promise((resolve, reject) => {
       studentMajor[major].count += 1;
       numberOfStudents += 1;
     });
-    resolve( { studentMajor, numberOfStudents });
+    resolve({ studentMajor, numberOfStudents });
   });
 });
 
@@ -39,14 +39,15 @@ app.get('/', (_, res) => {
 app.get('/students', (_, res) => {
   countStudents(dbFile)
     .then(({ studentMajor, numberOfStudents }) => {
-      let response = 'This is the list of our students:\n';
-      response += `Total number of students: ${numberofStudents}\n`;
-      for (const major in studentMajor) {
-      response += `Number of students in ${major}: ${studentMajor[major].count}. List: ${studentMajor[major].name.join(',')}\n`;
+      const responseParts = ['This is the list of our students'];
+      responseParts.push(`Number of students: ${numberOfStudents}`);
+      Object.entries(studentMajor).forEach(([major, { name, count }]) => {
+        responseParts.push(`Number of students in ${major}: ${count}. List: ${name.join(', ')}`);
+      });
+      const responseText = responseParts.join('\n');
       res.setHeader('Content-Type', 'text/plain');
       res.statusCode = 200;
-      res.send(response);
-      }
+      res.send(responseText);
     })
     .catch((error) => {
       const responseText = `This is the list of our students\n${error.message}`;
@@ -58,3 +59,4 @@ app.get('/students', (_, res) => {
 app.listen(port, host, () => {
   console.log(`Server Listening on ${port}: ${host}`)
 });
+module.exports = app
