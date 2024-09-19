@@ -9,7 +9,7 @@ const fs = require('fs');
 const countStudents = (file) => new Promise((resolve, reject) => {
   fs.readFile(file, 'utf8', (err, data) => {
     if (err) {
-      reject(new Error('Cannot load the Database'));
+      reject(new Error('Cannot load the database'));
       return;
     }
     const stringFormat = data.trim();
@@ -38,14 +38,12 @@ const countStudents = (file) => new Promise((resolve, reject) => {
 });
 
 app.on('request', (req, res) => {
-  res.setHeader('Content-Type', 'text/plain');
   if (req.url === '/') {
+    res.setHeader('Content-Type', 'text/plain');
     res.statusCode = 200;
-    const responseText = 'Hello Holberton School!';
-    res.setHeader('Content-Length', Buffer.byteLength(responseText));
-    res.end(responseText);
+    res.end('Hello Holberton School!');
   } else if (req.url === '/students') {
-    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/plain');
     const responseParts = ['This is the list of our students'];
     countStudents(dbFile)
       .then(({ studentMajor, numberOfStudents }) => {
@@ -54,21 +52,19 @@ app.on('request', (req, res) => {
           responseParts.push(`Number of students in ${major}: ${count}. List: ${name.join(', ')}`);
         });
         const responseText = responseParts.join('\n');
+	res.setHeader('Content-Type', 'text/plain');
         res.setHeader('Content-Length', Buffer.byteLength(responseText));
+	res.statusCode = 200;
         res.end(responseText);
       })
       .catch((error) => {
         responseParts.push(`Error: ${error.message}`);
         const responseText = responseParts.join('\n');
+	res.setHeader('Content-Type', 'text/plain');
         res.setHeader('Content-Length', Buffer.byteLength(responseText));
-        res.statusCode = 200;
+	res.statusCode = 200;
         res.end(responseText);
       });
-  } else {
-    res.statusCode = 200;
-    const notFoundText = 'Not Found';
-    res.setHeader('Content-Length', Buffer.byteLength(notFoundText));
-    res.end(notFoundText);
   }
 });
 
