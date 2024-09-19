@@ -58,8 +58,7 @@ app.on('request', (req, res) => {
         res.end(responseText);
       })
       .catch((error) => {
-        responseParts.push(`Error: ${error.message}`);
-        const responseText = responseParts.join('\n');
+        const responseText = `This is the list of our students\n${error.message}`;
 	res.setHeader('Content-Type', 'text/plain');
         res.setHeader('Content-Length', Buffer.byteLength(responseText));
 	res.statusCode = 200;
