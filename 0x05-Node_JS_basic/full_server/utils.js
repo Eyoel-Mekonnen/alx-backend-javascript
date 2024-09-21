@@ -9,6 +9,7 @@ const readDatabase = (dbFile) => new Promise((resolve, reject) => {
     }
     const stringFormat = data.trim();
     const arrayFormat = stringFormat.split('\n');
+    arrayFormat.shift();
     const studentMajor = {};
     arrayFormat.forEach((line) => {
       const fields = line.split(',');
