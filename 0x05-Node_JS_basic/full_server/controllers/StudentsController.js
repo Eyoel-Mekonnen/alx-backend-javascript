@@ -6,7 +6,6 @@ class StudentController {
     response.statusCode = 200;
     readDatabase(dbFile)
       .then(({ studentMajor }) => {
-	console.log(studentMajor)
         const comparatorFunction = (a, b) => {
           if (a.toLowerCase() < b.toLowerCase()) {
             return -1;
