@@ -39,7 +39,7 @@ class StudentController {
     const dbFile = process.argv.length > 2 ? process.argv[2] : '';
     if (major !== 'CS' && major !== 'SWE') {
       response.statusCode = 500;
-      response.send('Major parameter must be CS or SWE');
+      response.send('Major parameter must be CS or SWE\n');
       return;
     }
     readDatabase(dbFile)
