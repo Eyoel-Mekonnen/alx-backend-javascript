@@ -20,7 +20,7 @@ class StudentController {
         orderedKey.forEach((key) => {
           newStudentObject[key] = studentMajor[key];
         });
-        let responseText = 'This is the  list of our students\n';
+        let responseText = 'This is the list of our students\n';
         Object.keys(newStudentObject).forEach((key) => {
           const count = newStudentObject[key].length;
           responseText += `Number of students in ${key}: ${count}. List: ${newStudentObject[key].join(', ')}\n`;
