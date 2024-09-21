@@ -28,9 +28,9 @@ class StudentController {
         responseText = responseText.trimEnd();
         response.send(responseText);
       })
-      .catch((err) => {
+      .catch((err) => { // eslint-disable-line no-unused-vars
         response.statusCode = 500;
-        response.send(`${err.message}\n`);
+        response.send('Cannot load the database\n');
       });
   }
 
@@ -50,9 +50,9 @@ class StudentController {
         responseText = responseText.trimEnd();
         response.send(responseText);
       })
-      .catch((error) => {
+      .catch((error) => { // eslint-disable-line no-unused-vars
         response.statusCode = 500;
-        response.send(`${error.message}\n`);
+        response.send('Cannot load the database\n');
       });
   }
 }
