@@ -30,7 +30,7 @@ class StudentController {
       })
       .catch((err) => { // eslint-disable-line no-unused-vars
         response.statusCode = 500;
-        response.send('Cannot load the database\n');
+        response.send('Cannot load the database');
       });
   }
 
@@ -52,7 +52,7 @@ class StudentController {
       })
       .catch((error) => { // eslint-disable-line no-unused-vars
         response.statusCode = 500;
-        response.send('Cannot load the database\n');
+        response.send('Cannot load the database');
       });
   }
 }
